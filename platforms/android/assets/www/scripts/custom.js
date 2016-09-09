@@ -68,7 +68,12 @@ angular
 
             $urlRouterProvider.otherwise('/');
 
-                        $stateProvider
+                                    $stateProvider
+                .state('menu', {
+                    url: '/menu',
+                    templateUrl: 'modules/core/views/menu.html',
+                    controller: 'MenuController'
+                })
                 .state('home', {
                     url: '/',
                     templateUrl: 'modules/core/views/home.html',
@@ -86,3 +91,15 @@ angular
 
         }
     ]);
+
+'use strict';
+
+angular
+    .module('core')
+    .controller('MenuController', [
+        '$scope',
+        function($scope) {
+
+
+        }
+]);
