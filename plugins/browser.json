@@ -1,0 +1,22 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "io.cordova.angularcordova"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "io.cordova.angularcordova"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "io.cordova.angularcordova"
+        }
+    }
+}
