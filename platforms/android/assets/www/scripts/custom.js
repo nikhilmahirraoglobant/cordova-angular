@@ -78,7 +78,22 @@ angular
 
         $urlRouterProvider.otherwise('/');
 
-                                        $stateProvider
+                                                                $stateProvider
+            .state('flashlight-page', {
+                url: '/flashlight-page',
+                templateUrl: 'modules/core/views/flashlight-page.html',
+                controller: 'FlashlightPageController'
+            })
+            .state('vibrator-page', {
+                url: '/vibrator-page',
+                templateUrl: 'modules/core/views/vibrator-page.html',
+                controller: 'VibratorPageController'
+            })
+            .state('contact-page', {
+                url: '/contact-page',
+                templateUrl: 'modules/core/views/contact-page.html',
+                controller: 'ContactPageController'
+            })
             .state('browse-page', {
                 url: '/browse-page',
                 templateUrl: 'modules/core/views/browse-page.html',
@@ -138,6 +153,130 @@ angular
                 }
             };
         });
+
+'use strict';
+
+angular
+    .module('core')
+    .factory('$cordovaContacts', function($q) {
+
+        return {
+            save: function(contact) {
+                var q = $q.defer();
+                var deviceContact = navigator.contacts.create({"displayName": contact});
+
+                deviceContact.save(function(result) {
+                    q.resolve(result);
+                }, function(err) {
+                    q.reject(err);
+                });
+                return q.promise;
+            },
+
+            remove: function(contact) {
+                var q = $q.defer();
+                var deviceContact = navigator.contacts.create({"displayName": contact});
+
+                deviceContact.remove(function(result) {
+                    q.resolve(result);
+                }, function(err) {
+                    q.reject(err);
+                });
+                return q.promise;
+            },
+
+            clone: function(contact) {
+                var deviceContact = navigator.contacts.create(contact);
+                return deviceContact.clone(contact);
+            },
+
+            find: function(searchTerm) {
+                var q = $q.defer();
+                
+                var options = new ContactFindOptions();
+                options.filter = searchTerm;
+                options.multiple = true;
+                options.desiredFields = [navigator.contacts.fieldType.id];
+                options.hasPhoneNumber = true;
+                
+                var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
+                
+                if (Object.keys(options).length === 0) {
+                    navigator.contacts.find(fields, function(results) {
+                        q.resolve(results);
+                    }, function(err) {
+                        q.reject(err);
+                    }, options);
+                } else {
+                    navigator.contacts.find(fields, function(results) {
+                        q.resolve(results);
+                    }, function(err) {
+                        q.reject(err);
+                    }, options);
+                }
+                return q.promise;
+            },
+
+            pickContact: function() {
+                var q = $q.defer();
+
+                navigator.contacts.pickContact(function(contact) {
+                    q.resolve(contact);
+                }, function(err) {
+                    q.reject(err);
+                });
+
+                return q.promise;
+            }
+        };
+    });
+
+'use strict';
+
+angular
+    .module('core')
+    .factory('$cordovaFlashlight', function($q, $window) {
+
+        return {
+            available: function() {
+                var q = $q.defer();
+                $window.plugins.flashlight.available(function(isAvailable) {
+                    q.resolve(isAvailable);
+                });
+                return q.promise;
+            },
+
+            switchOn: function() {
+                var q = $q.defer();
+                $window.plugins.flashlight.switchOn(function(response) {
+                    q.resolve(response);
+                }, function(error) {
+                    q.reject(error);
+                });
+                return q.promise;
+            },
+
+            switchOff: function() {
+                var q = $q.defer();
+                $window.plugins.flashlight.switchOff(function(response) {
+                    q.resolve(response);
+                }, function(error) {
+                    q.reject(error);
+                });
+                return q.promise;
+            },
+
+            toggle: function() {
+                var q = $q.defer();
+                $window.plugins.flashlight.toggle(function(response) {
+                    q.resolve(response);
+                }, function(error) {
+                    q.reject(error);
+                });
+                return q.promise;
+            }
+        };
+    });
 
 'use strict';
 
@@ -237,6 +376,25 @@ angular
 
 angular
     .module('core')
+    .factory('$cordovaVibration', function() {
+
+        return {
+            vibrate: function(times) {
+                return navigator.notification.vibrate(times);
+            },
+            vibrateWithPattern: function(pattern, repeat) {
+                return navigator.notification.vibrateWithPattern(pattern, repeat);
+            },
+            cancelVibration: function() {
+                return navigator.notification.cancelVibration();
+            }
+        };
+    });
+
+'use strict';
+
+angular
+    .module('core')
     .controller('BrowsePageController', function($scope, $rootScope, $cordovaInAppBrowser) {
         
         var options = {
@@ -322,6 +480,98 @@ angular
 
 angular
     .module('core')
+    .controller('ContactPageController', function($scope, $cordovaContacts) {
+
+        $scope.contacts = [];
+
+        $scope.addContact = function() {
+            $cordovaContacts.save($scope.contactForm).then(function(result) {
+                alert("Contact saved "+$scope.contactForm);
+            }, function(err) {
+                alert("Contact not saved "+err);
+            });
+        };
+
+        $scope.getAllContacts = function() {
+            $cordovaContacts.find().then(function(allContacts) { //omitting parameter to .find() causes all contacts to be returned
+                $scope.contacts = allContacts;
+                alert($scope.contacts[0]);
+            }, function(err) {
+                alert("Cant found Contact "+err);
+            });
+        };
+
+        
+
+        $scope.findContactsBySearchTerm = function(searchTerm) {
+            /*var opts = { //search options
+                filter: searchTerm, // 'Bob'
+                multiple: true, // Yes, return any contact that matches criteria
+                fields: [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name], // These are the fields to search for 'bob'.
+                desiredFields: [navigator.contacts.fieldType.id] //return fields.
+            };*/
+
+            /*if ($ionicPlatform.isAndroid()) {
+                opts.hasPhoneNumber = true; //hasPhoneNumber only works for android.
+            };*/
+
+            console.log(navigator.contacts);
+            
+            $cordovaContacts.find(searchTerm).then(function(contactsFound) {
+                $scope.contacts = contactsFound;
+                alert("Found contacts "+JSON.stringify(contactsFound[0]));
+            }, function(err) {
+                alert("Cant found Contact "+err);
+            });
+        };
+
+        $scope.pickContactUsingNativeUI = function() {
+            $cordovaContacts.pickContact().then(function(contactPicked) {
+                $scope.contact = contactPicked;
+                console.log(contactPicked);
+            }, function(err) {
+                alert("Cant Pick Contact "+err);
+            })
+        };
+
+    });
+
+'use strict';
+
+angular
+    .module('core')
+    .controller('FlashlightPageController', function($scope, $cordovaFlashlight) {
+
+        $cordovaFlashlight.available().then(function(availability) {
+            var avail = availability; // is available
+        }, function() {
+        });
+
+        $scope.switchOn = function() {
+            $cordovaFlashlight.switchOn()
+                .then(
+                    function(success) { /* success */ },
+                    function(error) { /* error */ });
+        };
+
+        $scope.switchOff = function() {
+            $cordovaFlashlight.switchOff()
+                .then(
+                    function(success) { /* success */ },
+                    function(error) { /* error */ });
+        };
+
+        $scope.toggle = function() {
+            $cordovaFlashlight.toggle()
+                .then(function(success) { /* success */ },
+                    function(error) { /* error */ });
+        };
+    });
+
+'use strict';
+
+angular
+    .module('core')
     .controller('HomeController', ['$scope',
         function($scope) {
 
@@ -339,3 +589,20 @@ angular
 
         }
 ]);
+
+'use strict';
+
+angular
+    .module('core')
+    .controller('VibratorPageController', function($scope,$cordovaVibration) {
+
+    	$scope.vibrate = function(miliSeconds)
+    	{
+    		$cordovaVibration.vibrate(miliSeconds);
+    	}
+
+    	$scope.vibrateWithPattern = function(miliSeconds)
+    	{
+    		$cordovaVibration.vibrateWithPattern(miliSeconds);
+    	}
+    });

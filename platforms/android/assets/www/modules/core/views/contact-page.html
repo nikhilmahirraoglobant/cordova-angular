@@ -1,0 +1,20 @@
+<section>
+    This is the Contact pageview
+    <input type="text" , name="input" , ng-model="contactForm">
+    <br>
+    <button ng-click="addContact()">Add Contact</button>
+    <br>
+    <button ng-click="getAllContacts()">Get All Contacts</button>
+    <br>
+    <button ng-click="pickContactUsingNativeUI()">Pick Contact</button>
+    <br>
+    <button ng-click="findContactsBySearchTerm(contactForm)">Search Contact</button>
+    <div>
+        <p>Total Contact Found : {{contacts.length}}</p>
+        <ul>
+            <li ng-repeat="contact in contacts">
+                Name : {{contact.displayName | null}}
+            </li>
+        </ul>
+    </div>
+</section>
