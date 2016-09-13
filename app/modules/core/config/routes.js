@@ -68,7 +68,55 @@ angular
          * - When the state is `'browse-page'`, route to browse-page
          *
          */
+        /**
+         * @ngdoc event
+         * @name core.config.route
+         * @eventOf core.config
+         * @description
+         *
+         * Define routes and the associated paths
+         *
+         * - When the state is `'contact-page'`, route to contact-page
+         *
+         */
+        /**
+         * @ngdoc event
+         * @name core.config.route
+         * @eventOf core.config
+         * @description
+         *
+         * Define routes and the associated paths
+         *
+         * - When the state is `'vibrator-page'`, route to vibrator-page
+         *
+         */
+        /**
+         * @ngdoc event
+         * @name core.config.route
+         * @eventOf core.config
+         * @description
+         *
+         * Define routes and the associated paths
+         *
+         * - When the state is `'flashlight-page'`, route to flashlight-page
+         *
+         */
         $stateProvider
+            .state('flashlight-page', {
+                url: '/flashlight-page',
+                templateUrl: 'modules/core/views/flashlight-page.html',
+                controller: 'FlashlightPageController'
+            })
+            .state('vibrator-page', {
+                url: '/vibrator-page',
+                templateUrl: 'modules/core/views/vibrator-page.html',
+                controller: 'VibratorPageController'
+            })
+            .state('contact-page', {
+                url: '/contact-page',
+                templateUrl: 'modules/core/views/contact-page.html',
+                controller: 'ContactPageController'
+            })
             .state('browse-page', {
                 url: '/browse-page',
                 templateUrl: 'modules/core/views/browse-page.html',

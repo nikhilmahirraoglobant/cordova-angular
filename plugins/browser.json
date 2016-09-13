@@ -12,6 +12,15 @@
         },
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "io.cordova.angularcordova"
+        },
+        "cordova-plugin-contacts": {
+            "PACKAGE_NAME": "io.cordova.angularcordova"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "io.cordova.angularcordova"
+        },
+        "cordova-plugin-flashlight": {
+            "PACKAGE_NAME": "io.cordova.angularcordova"
         }
     },
     "dependent_plugins": {
