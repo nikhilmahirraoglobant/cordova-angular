@@ -16,7 +16,11 @@ var ApplicationConfiguration = (function() {
         'ngSanitize', 
         'ui.router',
         'ui.bootstrap',
-        'ui.utils'
+        'ui.utils',
+        
+        'LocalStorageModule', 
+        'nvd3ChartDirectives', 
+        'ngMap'
     ];
 
     // Add a new vertical module

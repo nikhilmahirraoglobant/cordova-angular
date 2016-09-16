@@ -9,7 +9,7 @@
  */
 angular
     .module('core')
-    .config(function($stateProvider, $urlRouterProvider, $cordovaInAppBrowserProvider) {
+    .config(function($stateProvider, $urlRouterProvider, $cordovaInAppBrowserProvider, localStorageServiceProvider) {
 
         var defaultOptions = {
             location: 'no',
@@ -101,7 +101,47 @@ angular
          * - When the state is `'flashlight-page'`, route to flashlight-page
          *
          */
+        /**
+         * @ngdoc event
+         * @name core.config.route
+         * @eventOf core.config
+         * @description
+         *
+         * Define routes and the associated paths
+         *
+         * - When the state is `'weather-page'`, route to weather-page
+         *
+         */
+        /**
+         * @ngdoc event
+         * @name core.config.route
+         * @eventOf core.config
+         * @description
+         *
+         * Define routes and the associated paths
+         *
+         * - When the state is `'forecast-page'`, route to forecast-page
+         *
+         */
         $stateProvider
+            .state('forecast-page', {
+                url: '/forecast-page',
+                templateUrl: 'modules/core/views/forecast-page.html',
+                controller: 'ForecastPageController'
+            })
+            .state('forecast-page.days', {
+                url: '/days',
+                templateUrl: 'modules/core/views/days.htm'
+            })
+            .state('forecast-page.graph', {
+                url: '/graph',
+                templateUrl: 'modules/core/views/graph.htm'
+            })
+            .state('weather-page', {
+                url: '/weather-page',
+                templateUrl: 'modules/core/views/weather-page.html',
+                controller: 'WeatherPageController'
+            })
             .state('flashlight-page', {
                 url: '/flashlight-page',
                 templateUrl: 'modules/core/views/flashlight-page.html',

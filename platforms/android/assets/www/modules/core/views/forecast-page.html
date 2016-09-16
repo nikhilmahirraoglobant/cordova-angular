@@ -1,0 +1,14 @@
+<section>
+    <h4 class="col-md-6 col-md-offset-3">Forecast city {{city}}<hr/></h4>
+    <div ng-show="isPageLoaded">
+        <div class="col-md-6 col-md-offset-3 subTab">
+            <ul class="nav nav-tabs ">
+                <li ng-repeat="tab in tabs" ui-sref-active="active" ui-sref="{{tab.stateName}}"><a data-toggle="tab" class="tabs" href="">{{tab.title}}</a></li>
+            </ul>
+        </div>
+        <div class="subTabContainer">
+            <div ui-view class="view-animate"></div>
+        </div>
+    </div>
+    <!-- <pre-loader ng-hide="isPageLoaded"></pre-loader> -->
+</section>
