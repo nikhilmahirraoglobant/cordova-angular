@@ -1,0 +1,9 @@
+<div class="container col-md-6 col-md-offset-3">
+    <div ng-repeat = "w in weatherResult.list" >
+        <div class="colomn">
+            <div class="col-md-4 ">
+                <weather-report weather-day="w" convert-to-date = "convertToDate(dt)" data-formate="MMM d, y"></weather-report>
+            </div>    
+        </div>
+    </div>
+</div>

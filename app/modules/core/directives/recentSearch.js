@@ -4,7 +4,7 @@ angular
    
     return{
         restrict: 'E',
-        templateUrl: 'view/directives/recentSearch.html',
+        templateUrl: 'modules/core/views/recentSearch.html',
         replace: true,
         scope:{
             weatherDay: "=",

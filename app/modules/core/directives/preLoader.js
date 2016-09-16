@@ -4,7 +4,7 @@ angular
    
     return{
         restrict: 'E',
-        templateUrl: 'view/directives/preLoader.html',
+        templateUrl: 'modules/core/views/preLoader.html',
         replace: true        
     }
 });

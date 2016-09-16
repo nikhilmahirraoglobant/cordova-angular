@@ -1,0 +1,15 @@
+<div class="panel panel-default boxpannel ">
+    <h5 class="header"> <div class="panel-heading">
+        {{weatherDay.dt | convertToDate | date: dateFormate}}
+           <img width = '50px' height = '50px' ng-src = 'http://openweathermap.org/img/w/{{weatherDay.weather[0].icon}}.png' alt="Image not found"/> 
+       
+    </div> </h5>
+    <div class="panel-body ">
+        Min: {{weatherDay.temp.min}}&#8451
+        <br/> Max: {{weatherDay.temp.max}}&#8451
+        <br/> Wind Speed: {{weatherDay.speed}}m/s
+        <br/> Humidity: {{weatherDay.humidity}}
+        <br/> {{weatherDay.weather[0].description}}
+        <br/>
+    </div>
+</div>

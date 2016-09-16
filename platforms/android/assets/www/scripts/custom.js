@@ -90,11 +90,11 @@ angular
             })
             .state('forecast-page.days', {
                 url: '/days',
-                templateUrl: 'modules/core/views/days.htm'
+                templateUrl: 'modules/core/views/days.html'
             })
             .state('forecast-page.graph', {
                 url: '/graph',
-                templateUrl: 'modules/core/views/graph.htm'
+                templateUrl: 'modules/core/views/graph.html'
             })
             .state('weather-page', {
                 url: '/weather-page',
@@ -567,7 +567,7 @@ angular
    
     return{
         restrict: 'E',
-        templateUrl: 'view/directives/preLoader.html',
+        templateUrl: 'modules/core/views/preLoader.html',
         replace: true        
     }
 });
@@ -577,7 +577,7 @@ angular
    
     return{
         restrict: 'E',
-        templateUrl: 'view/directives/recentSearch.html',
+        templateUrl: 'modules/core/views/recentSearch.html',
         replace: true,
         scope:{
             weatherDay: "=",
@@ -593,7 +593,7 @@ angular
    
     return{
         restrict: 'E',
-        templateUrl: 'modules/core/views/directives/weatherReport.html',
+        templateUrl: 'modules/core/views/weatherReport.html',
         replace: true,
         scope:{
             weatherDay: "=",
