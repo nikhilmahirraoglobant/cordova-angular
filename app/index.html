@@ -1,29 +1,30 @@
 <!doctype html>
-  <html>
-  <head>
+<html>
+
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-
     <!-- build:css styles/vendor.css -->
-        <!-- injector:bowercss -->
-        <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
-        <!-- endinjector -->
+    <!-- injector:bowercss -->
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+    <!-- endinjector -->
     <!-- endbuild -->
-
     <!-- build:css styles/custom.css -->
-        <!-- injector:css -->
-        <link rel="stylesheet" href="css/customcordova.css">
-        <link rel="stylesheet" href="css/demo.css">
-        <!-- endinjector -->
+    <!-- injector:css -->
+    <link rel="stylesheet" href="css/customcordova.css">
+    <link rel="stylesheet" href="css/demo.css">
+    <link rel="stylesheet" href="css/nv.d3.css">
+    <link rel="stylesheet" href="css/weather.css">
+    <!-- endinjector -->
     <!-- endbuild -->
-    <script src="cordova.js"></script>
-  </head>
+    
+</head>
 
-  <body>
+<body>
     <!-- =================== Navigation bar =================== -->
-    <header class="navbar navbar-default navbar-fixed-top">
+    <header class="navbar navbar-default navbar-fixed-top" >
         <div class="navbar-inner">
             <div class="container">
                 <div class="navbar-header">
@@ -34,17 +35,9 @@
             </div>
         </div>
     </header>
-
     <div class="header-placeholder"></div>
     <div role="main">
-        <header class="bs-header text-center" id="overview">
-            <div class="container">
-                <h1 id="app-heading">
-                    AngularJs Cordova application
-                </h1>
-            </div>
-        </header>
-
+       
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -55,50 +48,67 @@
         <!-- /.container -->
     </div>
     <!-- /.main -->
-
     <footer class="footer">
         <div class="container">
             <p>Code licensed under <a href="https://github.com/keshavos/generator-angularjs-cordova/">MIT License</a>.</p>
         </div>
     </footer>
+    <!-- build:js scripts/vendor.js --> 
 
-    <!-- build:js scripts/vendor.js -->
-        <!-- injector:bowerjs -->
-        <script src="lib/jquery/dist/jquery.js"></script>
-        <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="lib/angular/angular.js"></script>
-        <script src="lib/angular-resource/angular-resource.js"></script>
-        <script src="lib/angular-mocks/angular-mocks.js"></script>
-        <script src="lib/angular-cookies/angular-cookies.js"></script>
-        <script src="lib/angular-animate/angular-animate.js"></script>
-        <script src="lib/angular-touch/angular-touch.js"></script>
-        <script src="lib/angular-sanitize/angular-sanitize.js"></script>
-        <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-        <script src="lib/angular-ui-utils/ui-utils.js"></script>
-        <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
-        <!-- endinjector -->
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-resource/angular-resource.js"></script>
+    <script src="lib/angular-mocks/angular-mocks.js"></script>
+    <script src="lib/angular-cookies/angular-cookies.js"></script>
+    <script src="lib/angular-animate/angular-animate.js"></script>
+    <script src="lib/angular-touch/angular-touch.js"></script>
+    <script src="lib/angular-sanitize/angular-sanitize.js"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="lib/angular-ui-utils/ui-utils.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="lib/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="lib/d3.js"></script>
+    <script src="lib/nv.d3.js"></script>
+    <script src="lib/moment.js"></script>
+    <script src="lib/angularjs-nvd3-directives.js"></script>
+    <script src="lib/ng-map.min.js"></script>
+    <script src='http://maps.google.cn/maps/api/js?sensor=false'></script> 
+    
     <!-- endbuild -->
-
     <!-- build:js scripts/custom.js -->
-        <!-- injector:js -->
-        <script src="js/config.js"></script>
-        <script src="js/application.js"></script>
-        <script src="modules/core/core.js"></script>
-        <script src="modules/core/config/routes.js"></script>
-        <script src="modules/core/services/cordova-camera.js"></script>
-        <script src="modules/core/services/cordova-contacts.js"></script>
-        <script src="modules/core/services/cordova-flashlight.js"></script>
-        <script src="modules/core/services/cordova-in-app-browser.js"></script>
-        <script src="modules/core/services/cordova-vibration.js"></script>
-        <script src="modules/core/controllers/browse-page.js"></script>
-        <script src="modules/core/controllers/camera-page.js"></script>
-        <script src="modules/core/controllers/contact-page.js"></script>
-        <script src="modules/core/controllers/flashlight-page.js"></script>
-        <script src="modules/core/controllers/home.js"></script>
-        <script src="modules/core/controllers/menu.js"></script>
-        <script src="modules/core/controllers/vibrator-page.js"></script>
-        <!-- endinjector -->
+    <!-- injector:js -->
+    <script src="js/config.js"></script>
+    <script src="js/application.js"></script>
+    <script src="modules/core/core.js"></script>
+    <script src="modules/core/config/routes.js"></script>
+    <script src="modules/core/services/city-weather.js"></script>
+    <script src="modules/core/services/cordova-camera.js"></script>
+    <script src="modules/core/services/cordova-contacts.js"></script>
+    <script src="modules/core/services/cordova-flashlight.js"></script>
+    <script src="modules/core/services/cordova-in-app-browser.js"></script>
+    <script src="modules/core/services/cordova-vibration.js"></script>
+    <script src="modules/core/services/history-service.js"></script>
+    <script src="modules/core/directives/preLoader.js"></script>
+    <script src="modules/core/directives/recentSearch.js"></script>
+    <script src="modules/core/directives/weatherReport.js"></script>
+    <script src="modules/core/filters/convertToDate.js"></script>
+    <script src="modules/core/filters/titlecase.js"></script>
+    <script src="modules/core/controllers/browse-page.js"></script>
+    <script src="modules/core/controllers/camera-page.js"></script>
+    <script src="modules/core/controllers/contact-page.js"></script>
+    <script src="modules/core/controllers/flashlight-page.js"></script>
+    <script src="modules/core/controllers/forecast-page.js"></script>
+    <script src="modules/core/controllers/home.js"></script>
+    <script src="modules/core/controllers/menu.js"></script>
+    <script src="modules/core/controllers/vibrator-page.js"></script>
+    <script src="modules/core/controllers/weather-page.js"></script>
+    <!-- endinjector -->
     <!-- endbuild -->
 
-  </body>
+    
+    <script src="cordova.js"></script>
+
+</body>
+
 </html>

@@ -13,7 +13,11 @@ var ApplicationConfiguration = (function() {
         'ngSanitize', 
         'ui.router',
         'ui.bootstrap',
-        'ui.utils'
+        'ui.utils',
+        
+        'LocalStorageModule', 
+        'nvd3ChartDirectives', 
+        'ngMap'
     ];
     var registerModule = function(moduleName) {
         angular
@@ -56,13 +60,13 @@ angular
 
 'use strict';
 
-ApplicationConfiguration.registerModule('core');
+ApplicationConfiguration.registerModule('core', []);
 
 'use strict';
 
 angular
     .module('core')
-    .config(function($stateProvider, $urlRouterProvider, $cordovaInAppBrowserProvider) {
+    .config(function($stateProvider, $urlRouterProvider, $cordovaInAppBrowserProvider, localStorageServiceProvider) {
 
         var defaultOptions = {
             location: 'no',
@@ -78,7 +82,25 @@ angular
 
         $urlRouterProvider.otherwise('/');
 
-                                                                $stateProvider
+                                                                                $stateProvider
+            .state('forecast-page', {
+                url: '/forecast-page',
+                templateUrl: 'modules/core/views/forecast-page.html',
+                controller: 'ForecastPageController'
+            })
+            .state('forecast-page.days', {
+                url: '/days',
+                templateUrl: 'modules/core/views/days.htm'
+            })
+            .state('forecast-page.graph', {
+                url: '/graph',
+                templateUrl: 'modules/core/views/graph.htm'
+            })
+            .state('weather-page', {
+                url: '/weather-page',
+                templateUrl: 'modules/core/views/weather-page.html',
+                controller: 'WeatherPageController'
+            })
             .state('flashlight-page', {
                 url: '/flashlight-page',
                 templateUrl: 'modules/core/views/flashlight-page.html',
@@ -116,6 +138,101 @@ angular
             });
     });
 
+'use strict';
+
+angular
+    .module('core')
+    .service('cityWeather',function($resource, $stateParams, $q){
+    
+    this.city = "Pune";
+    this.cityHistroy = [];
+    
+    this.getWeatherInfo = function(myCity, successCB)
+    {
+        var deffered = $q.defer();
+        
+        var that = this;
+        this.weatherAPI = $resource("http://api.openweathermap.org/data/2.5/forecast/daily",
+                                    {callback:"JSON_CALLBACK"},
+                                    {get:{method:"JSONP"}}
+                                   );
+        
+        this.appid = '8e667bfe426b3246f76f50f038bbabae';
+    
+        this.units= 'metric';
+        
+        this.days = $stateParams.days || 6;
+    
+        this.weatherAPI.get({units:this.units,q:myCity, cnt:this.days, appid:this.appid})
+        .$promise.then(function(data) {
+            
+            deffered.resolve(data);
+        },
+        function(error) {
+            deffered.reject("Error "+error);
+            
+        });        
+        
+        return deffered.promise;
+        
+    };
+    
+    this.getDates = function(tempWeatherData)
+    {
+        var maxData  = tempWeatherData.list.map(function(a) {return getGoodData(a,"max");});
+        
+        function getGoodData(dayObject,option)
+        {
+            return (dayObject.dt* 1000);
+        };
+        
+        return maxData;
+    }
+    
+    this.getMapData = function(tempWeatherData)
+    {
+        var mapData = {};
+        
+        var maxData  = tempWeatherData.list.map(function(a) {return getGoodData(a,"max");});
+        var minData  = tempWeatherData.list.map(function(a) {return getGoodData(a,"min");});
+        var dayData  = tempWeatherData.list.map(function(a) {return getGoodData(a,"day");});
+        var nightData  = tempWeatherData.list.map(function(a) {return getGoodData(a,"night");});
+        
+        function getGoodData(dayObject,option)
+        {
+            return [dayObject.dt* 1000,dayObject.temp[option]];
+        };  
+        
+        mapData = [
+            {
+                "key": "Max",
+                "values": maxData,
+                color: 'red'
+            },
+
+            {
+                "key": "Min",
+                "values": minData,
+                color: 'blue'
+            },
+
+            {
+                "key": "Day",
+                "values": dayData,
+                color: 'orange'
+            },
+
+            {
+                "key": "Night",
+                "values": nightData,
+                color: 'black'
+            }
+        ];
+        
+        return mapData;
+    }
+    
+});
 'use strict';
 
 angular
@@ -395,6 +512,116 @@ angular
 
 angular
     .module('core')
+    .service('historyService',function(cityWeather, localStorageService){
+ 
+    var that = this;
+    
+    this.updateHistory = function(cityName)
+    {
+    
+        var cities = [];
+        
+        if(localStorage["cities"] == undefined)
+        {
+            cities[0] = cityName;
+            localStorage["cities"] = JSON.stringify(cities);
+        }
+        else
+        {
+            cities = JSON.parse(localStorage["cities"]);
+            
+            if(cities.indexOf(cityName) != -1)
+            {
+                cities.splice(cities.indexOf(cityName), 1);
+            }
+            
+            cities.unshift(cityName);
+            
+            if(cities.length > 5)
+            {
+            }
+            
+            
+            localStorage["cities"] = JSON.stringify(cities);
+        }
+        
+        return cities;
+    };
+    
+    this.getCities = function()
+    {
+        if(localStorage["cities"] == undefined)
+        {
+            return [cityWeather.city];
+        }
+        else
+        {
+            return JSON.parse(localStorage["cities"]);
+        }
+    };
+    
+});
+angular
+    .module('core')
+    .directive('preLoader',function(){
+   
+    return{
+        restrict: 'E',
+        templateUrl: 'view/directives/preLoader.html',
+        replace: true        
+    }
+});
+angular
+    .module('core')
+    .directive('recentSearch',function(){
+   
+    return{
+        restrict: 'E',
+        templateUrl: 'view/directives/recentSearch.html',
+        replace: true,
+        scope:{
+            weatherDay: "=",
+            convertToDate: "&",
+            dateFormate: "@"          
+        }
+    }
+});
+
+angular
+    .module('core')
+    .directive('weatherReport',function(){
+   
+    return{
+        restrict: 'E',
+        templateUrl: 'modules/core/views/directives/weatherReport.html',
+        replace: true,
+        scope:{
+            weatherDay: "=",
+            convertToDate: "&",
+            dateFormate: "@"            
+        }
+    }
+});
+angular
+    .module('core')
+    .filter('convertToDate', function() {
+
+    return function(dt) {
+        return new Date(dt * 1000);
+    }
+});
+angular
+    .module('core')
+    .filter('titlecase', function() {
+
+    return function(str) {
+        return (str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}));
+    }
+});
+'use strict';
+
+angular
+    .module('core')
     .controller('BrowsePageController', function($scope, $rootScope, $cordovaInAppBrowser) {
         
         var options = {
@@ -572,6 +799,43 @@ angular
 
 angular
     .module('core')
+    .controller('ForecastPageController', function($scope, $state, $timeout, $filter, cityWeather) {
+
+        $scope.isPageLoaded = false;
+
+        $scope.city = cityWeather.city;
+
+        cityWeather.getWeatherInfo($scope.city)
+            .then(function(data) {
+                    $scope.weatherResult = data;
+                    $scope.exampleData = cityWeather.getMapData($scope.weatherResult);
+                    $scope.dates = cityWeather.getDates($scope.weatherResult);
+
+                    $scope.isPageLoaded = true;
+
+                    $state.go("forecast-page.days");
+                },
+                function(error) {
+                });
+
+        $scope.xAxisTickFormat = function() {
+            return function(d) {
+                return d3.time.format('%d-%b-%y')(new Date(d)); //uncomment for date format
+            }
+        }
+        $scope.tabs = [{
+            title: 'Days',
+            stateName: 'forecast-page.days'
+        }, {
+            title: 'Graph',
+            stateName: 'forecast-page.graph'
+        }];
+    });
+
+'use strict';
+
+angular
+    .module('core')
     .controller('HomeController', ['$scope',
         function($scope) {
 
@@ -605,4 +869,75 @@ angular
     	{
     		$cordovaVibration.vibrateWithPattern(miliSeconds);
     	}
+    });
+
+'use strict';
+
+angular
+    .module('core')
+    .controller('WeatherPageController', function($scope, $location, $state, $filter, cityWeather, historyService, localStorageService, NgMap) {
+
+        $scope.city = cityWeather.city;
+
+        $scope.cityHistroy = cityWeather.cityHistroy;
+
+
+        $scope.$watch('city', function(newValue, oldValue) {
+
+            if (typeof(newValue) == 'object') {
+                $scope.city = newValue.name;
+            }
+
+            $scope.city = $filter('titlecase')($scope.city);
+
+            cityWeather.city = $scope.city;
+        });
+
+        $scope.$watch('cityHistroy', function() {
+
+            cityWeather.cityHistroy = $scope.cityHistroy;
+
+        });
+
+        $scope.submit = function() {
+            if ($scope.city.length) {
+                var citiesArr = historyService.updateHistory($scope.city);
+
+                $state.go("forecast-page.days");
+            };
+        };
+
+        $scope.getHistoryWeather = function() {
+
+            var citiesArr = historyService.getCities();
+
+            this.setWeatherHistory = function(cityName) {
+                var cityInfo = {};
+                cityInfo.name = cityName;
+
+                cityWeather.getWeatherInfo(cityInfo.name)
+                    .then(function(data) {
+
+                            cityInfo.weatherResult = data;
+                        },
+                        function(error) {
+                        });
+
+                return cityInfo;
+            }
+
+            $scope.cityHistroy = citiesArr.map(this.setWeatherHistory);
+
+            if ($scope.cityHistroy.length > 0) {
+                $scope.city = $scope.cityHistroy[0].name;
+            }
+        };
+
+        $scope.map = {
+
+            center: [18.5203, 73.8567],
+
+            zoom: 10
+        };
+
     });

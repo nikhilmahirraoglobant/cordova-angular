@@ -1,0 +1,121 @@
+#gmaps {
+    width: 450px;
+    height: 450px;
+}
+
+ng-map
+{
+    height: 400px; 
+}
+
+.ng-isolate-scope
+{
+    width: 95%;
+}
+
+
+.preloader
+{
+    position: absolute;
+    top: 50%;
+    left:50%;
+}
+
+.subTabContainer
+{
+    width: 100%;
+}
+
+.subTab
+{
+    padding-bottom: 10px;
+}
+
+.header
+{
+    background-color:#0AB3D3;
+    color: aliceblue;
+}
+.boxpannel{
+    background-color:#2B3B3E;
+    color: aliceblue;
+}
+#subhead{
+   color: aliceblue;  
+}
+
+body
+{
+  background-color:#272727;
+     color: aliceblue;  
+    
+}
+svg text {
+    fill: white;
+}
+
+.nvtooltip
+{
+    background-color:#272727;
+    border-color: aliceblue;
+}
+
+.tabs{
+  
+    color:aliceblue;
+}
+
+.customSearch
+{   
+   color: #272727; 
+}
+
+button.on {
+    background-color: lightgreen;
+}
+
+/*Animations*/
+
+.view-animate-container {
+  position:relative;
+  /*height:100px!important;
+  background:white;
+  border:1px solid black;
+  height:40px;*/
+  overflow:hidden;
+}
+
+.view-animate {
+  /*padding:10px;*/
+    
+}
+
+.view-animate.ng-enter {
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+
+    display:block;
+    width:100%;
+    
+    opacity: 1;
+}
+
+.view-animate.ng-enter {
+ /* left:100%;*/
+    opacity: 0;
+}
+
+.view-animate.ng-leave {
+  /*left:-100%;*/
+    opacity: 1;
+}
+
+.view-animate.ng-enter.ng-enter-active {
+ /* left:0;*/
+    opacity: 1;
+}
+.view-animate.ng-leave.ng-leave-active {
+  /*left:-100%;*/    
+    opacity: 1;
+}
+
+/*-----------------------------------*/
