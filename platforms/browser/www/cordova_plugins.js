@@ -149,6 +149,20 @@ module.exports = [
         "clobbers": [
             "window.plugins.flashlight"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-battery-status/www/battery.js",
+        "id": "cordova-plugin-battery-status.battery",
+        "pluginId": "cordova-plugin-battery-status",
+        "clobbers": [
+            "navigator.battery"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-battery-status/src/browser/BatteryProxy.js",
+        "id": "cordova-plugin-battery-status.Battery",
+        "pluginId": "cordova-plugin-battery-status",
+        "runs": true
     }
 ];
 module.exports.metadata = 
@@ -159,7 +173,8 @@ module.exports.metadata =
     "cordova-plugin-inappbrowser": "1.4.0",
     "cordova-plugin-contacts": "2.1.0",
     "cordova-plugin-vibration": "2.1.1",
-    "cordova-plugin-flashlight": "3.1.0"
+    "cordova-plugin-flashlight": "3.1.0",
+    "cordova-plugin-battery-status": "1.1.2"
 }
 // BOTTOM OF METADATA
 });

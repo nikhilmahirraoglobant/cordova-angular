@@ -78,7 +78,12 @@ angular
 
         $urlRouterProvider.otherwise('/');
 
-                                                        $stateProvider
+                                                                $stateProvider
+            .state('flashlight-page', {
+                url: '/flashlight-page',
+                templateUrl: 'modules/core/views/flashlight-page.html',
+                controller: 'FlashlightPageController'
+            })
             .state('vibrator-page', {
                 url: '/vibrator-page',
                 templateUrl: 'modules/core/views/vibrator-page.html',
@@ -221,6 +226,53 @@ angular
                     q.reject(err);
                 });
 
+                return q.promise;
+            }
+        };
+    });
+
+'use strict';
+
+angular
+    .module('core')
+    .factory('$cordovaFlashlight', function($q, $window) {
+
+        return {
+            available: function() {
+                var q = $q.defer();
+                $window.plugins.flashlight.available(function(isAvailable) {
+                    q.resolve(isAvailable);
+                });
+                return q.promise;
+            },
+
+            switchOn: function() {
+                var q = $q.defer();
+                $window.plugins.flashlight.switchOn(function(response) {
+                    q.resolve(response);
+                }, function(error) {
+                    q.reject(error);
+                });
+                return q.promise;
+            },
+
+            switchOff: function() {
+                var q = $q.defer();
+                $window.plugins.flashlight.switchOff(function(response) {
+                    q.resolve(response);
+                }, function(error) {
+                    q.reject(error);
+                });
+                return q.promise;
+            },
+
+            toggle: function() {
+                var q = $q.defer();
+                $window.plugins.flashlight.toggle(function(response) {
+                    q.resolve(response);
+                }, function(error) {
+                    q.reject(error);
+                });
                 return q.promise;
             }
         };
@@ -482,6 +534,38 @@ angular
             })
         };
 
+    });
+
+'use strict';
+
+angular
+    .module('core')
+    .controller('FlashlightPageController', function($scope, $cordovaFlashlight) {
+
+        $cordovaFlashlight.available().then(function(availability) {
+            var avail = availability; // is available
+        }, function() {
+        });
+
+        $scope.switchOn = function() {
+            $cordovaFlashlight.switchOn()
+                .then(
+                    function(success) { /* success */ },
+                    function(error) { /* error */ });
+        };
+
+        $scope.switchOff = function() {
+            $cordovaFlashlight.switchOff()
+                .then(
+                    function(success) { /* success */ },
+                    function(error) { /* error */ });
+        };
+
+        $scope.toggle = function() {
+            $cordovaFlashlight.toggle()
+                .then(function(success) { /* success */ },
+                    function(error) { /* error */ });
+        };
     });
 
 'use strict';

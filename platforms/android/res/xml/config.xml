@@ -15,6 +15,9 @@
     <feature name="Flashlight">
         <param name="android-package" value="nl.xservices.plugins.Flashlight" />
     </feature>
+    <feature name="Battery">
+        <param name="android-package" value="org.apache.cordova.batterystatus.BatteryListener" />
+    </feature>
     <name>AngularJsCordova</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
