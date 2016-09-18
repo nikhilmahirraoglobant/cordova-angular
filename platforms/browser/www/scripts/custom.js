@@ -169,6 +169,7 @@ angular
             deffered.resolve(data);
         },
         function(error) {
+            console.log(JSON.stringify(error));
             deffered.reject("Error "+error);
             
         });        
@@ -816,6 +817,7 @@ angular
                     $state.go("forecast-page.days");
                 },
                 function(error) {
+                    alert("Get weather info failed");
                 });
 
         $scope.xAxisTickFormat = function() {
@@ -921,6 +923,8 @@ angular
                             cityInfo.weatherResult = data;
                         },
                         function(error) {
+                            console.log(JSON.stringify(error));
+                            alert("Get weather info failed");
                         });
 
                 return cityInfo;

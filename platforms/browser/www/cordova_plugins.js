@@ -174,7 +174,8 @@ module.exports.metadata =
     "cordova-plugin-contacts": "2.1.0",
     "cordova-plugin-vibration": "2.1.1",
     "cordova-plugin-flashlight": "3.1.0",
-    "cordova-plugin-battery-status": "1.1.2"
+    "cordova-plugin-battery-status": "1.1.2",
+    "cordova-plugin-whitelist": "1.3.0"
 }
 // BOTTOM OF METADATA
 });
