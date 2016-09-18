@@ -26,6 +26,7 @@ angular
                 },
                 function(error) {
                     //console.log("Failed");
+                    alert("Get weather info failed");
                 });
 
         $scope.xAxisTickFormat = function() {

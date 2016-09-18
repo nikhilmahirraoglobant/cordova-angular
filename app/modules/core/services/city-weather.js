@@ -34,7 +34,8 @@ angular
             deffered.resolve(data);
         },
         function(error) {
-            deffered.reject("Error "+error);
+            console.log(JSON.stringify(error));
+            deffered.reject(error);
             
         });        
         

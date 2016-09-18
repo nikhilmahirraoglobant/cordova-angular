@@ -169,7 +169,8 @@ angular
             deffered.resolve(data);
         },
         function(error) {
-            deffered.reject("Error "+error);
+            console.log(JSON.stringify(error));
+            deffered.reject(error);
             
         });        
         
@@ -816,6 +817,7 @@ angular
                     $state.go("forecast-page.days");
                 },
                 function(error) {
+                    alert("Get weather info failed");
                 });
 
         $scope.xAxisTickFormat = function() {

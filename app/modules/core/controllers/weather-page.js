@@ -54,7 +54,8 @@ angular
                             cityInfo.weatherResult = data;
                         },
                         function(error) {
-                            //console.log("Failed");
+                            //console.log(JSON.stringify(error));
+                            //alert("Get weather info failed");
                         });
 
                 return cityInfo;
