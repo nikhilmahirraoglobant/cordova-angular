@@ -1,6 +1,20 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "file": "plugins/cordova-plugin-battery-status/www/battery.js",
+        "id": "cordova-plugin-battery-status.battery",
+        "pluginId": "cordova-plugin-battery-status",
+        "clobbers": [
+            "navigator.battery"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-battery-status/src/browser/BatteryProxy.js",
+        "id": "cordova-plugin-battery-status.Battery",
+        "pluginId": "cordova-plugin-battery-status",
+        "runs": true
+    },
+    {
         "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
         "id": "cordova-plugin-camera.Camera",
         "pluginId": "cordova-plugin-camera",
@@ -29,23 +43,6 @@ module.exports = [
         "id": "cordova-plugin-camera.CameraProxy",
         "pluginId": "cordova-plugin-camera",
         "runs": true
-    },
-    {
-        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
-        "id": "cordova-plugin-inappbrowser.inappbrowser",
-        "pluginId": "cordova-plugin-inappbrowser",
-        "clobbers": [
-            "cordova.InAppBrowser.open",
-            "window.open"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-inappbrowser/src/browser/InAppBrowserProxy.js",
-        "id": "cordova-plugin-inappbrowser.InAppBrowserProxy",
-        "pluginId": "cordova-plugin-inappbrowser",
-        "merges": [
-            ""
-        ]
     },
     {
         "file": "plugins/cordova-plugin-contacts/www/contacts.js",
@@ -125,6 +122,31 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/cordova-plugin-flashlight/www/Flashlight.js",
+        "id": "cordova-plugin-flashlight.Flashlight",
+        "pluginId": "cordova-plugin-flashlight",
+        "clobbers": [
+            "window.plugins.flashlight"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-inappbrowser/src/browser/InAppBrowserProxy.js",
+        "id": "cordova-plugin-inappbrowser.InAppBrowserProxy",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "merges": [
+            ""
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-vibration/www/vibration.js",
         "id": "cordova-plugin-vibration.notification",
         "pluginId": "cordova-plugin-vibration",
@@ -141,40 +163,18 @@ module.exports = [
             "navigator.notification",
             "navigator"
         ]
-    },
-    {
-        "file": "plugins/cordova-plugin-flashlight/www/Flashlight.js",
-        "id": "cordova-plugin-flashlight.Flashlight",
-        "pluginId": "cordova-plugin-flashlight",
-        "clobbers": [
-            "window.plugins.flashlight"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-battery-status/www/battery.js",
-        "id": "cordova-plugin-battery-status.battery",
-        "pluginId": "cordova-plugin-battery-status",
-        "clobbers": [
-            "navigator.battery"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-battery-status/src/browser/BatteryProxy.js",
-        "id": "cordova-plugin-battery-status.Battery",
-        "pluginId": "cordova-plugin-battery-status",
-        "runs": true
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
+    "cordova-plugin-battery-status": "1.1.2",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-camera": "2.2.0",
-    "cordova-plugin-inappbrowser": "1.4.0",
     "cordova-plugin-contacts": "2.1.0",
-    "cordova-plugin-vibration": "2.1.1",
     "cordova-plugin-flashlight": "3.1.0",
-    "cordova-plugin-battery-status": "1.1.2",
+    "cordova-plugin-inappbrowser": "1.4.0",
+    "cordova-plugin-vibration": "2.1.1",
     "cordova-plugin-whitelist": "1.3.0"
 }
 // BOTTOM OF METADATA

@@ -8,6 +8,31 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
 
+        cordovacli : {
+          options: {
+              path: 'www',
+              cli: 'cordova'
+          },
+          cordova: {
+              options: {
+                command: ['build'],
+                platforms: ['ios']
+              }
+            },
+            build_ios : {
+                options : {
+                    command : 'build',
+                    platforms : ['ios'],
+                    args : ['--debug']
+                }
+            },
+            run_ios: {
+              options: {
+                command: 'run',
+                platforms: ['ios']
+              }
+            }
+        },
         yeoman: {
             app: 'app',
             temp: 'temp',
@@ -457,4 +482,8 @@ module.exports = function(grunt) {
         'test',
         'build'
     ]);
+
+    grunt.registerTask('build:ios',['build','cordovacli:build_ios']);
+
+    grunt.registerTask('run:ios',['cordovacli:run_ios']);
 };

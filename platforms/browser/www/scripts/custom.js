@@ -170,7 +170,7 @@ angular
         },
         function(error) {
             console.log(JSON.stringify(error));
-            deffered.reject("Error "+error);
+            deffered.reject(error);
             
         });        
         
@@ -923,8 +923,6 @@ angular
                             cityInfo.weatherResult = data;
                         },
                         function(error) {
-                            console.log(JSON.stringify(error));
-                            alert("Get weather info failed");
                         });
 
                 return cityInfo;

@@ -7,22 +7,22 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-camera": {
+        "cordova-plugin-battery-status": {
             "PACKAGE_NAME": "io.cordova.angularcordova"
         },
-        "cordova-plugin-inappbrowser": {
+        "cordova-plugin-camera": {
             "PACKAGE_NAME": "io.cordova.angularcordova"
         },
         "cordova-plugin-contacts": {
             "PACKAGE_NAME": "io.cordova.angularcordova"
         },
-        "cordova-plugin-vibration": {
-            "PACKAGE_NAME": "io.cordova.angularcordova"
-        },
         "cordova-plugin-flashlight": {
             "PACKAGE_NAME": "io.cordova.angularcordova"
         },
-        "cordova-plugin-battery-status": {
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "io.cordova.angularcordova"
+        },
+        "cordova-plugin-vibration": {
             "PACKAGE_NAME": "io.cordova.angularcordova"
         },
         "cordova-plugin-whitelist": {
