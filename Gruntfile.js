@@ -419,7 +419,113 @@ module.exports = function(grunt) {
                 configFile: 'karma.conf.js',
                 singleRun: true
             }
-        }
+        },
+
+        cordovacli: {
+          options: {
+            path: 'www',
+            cli : 'cordova'
+          },
+          cordova: {
+            options: {
+              command: ['create','platform','plugin','prepare','build'],
+              platforms: ['ios','android'],
+              plugins: ['device',
+                'network-information',
+                'inappbrowser'
+              ],
+              path: '<%= yeoman.www %>',
+              id: 'com.ovrc.ovrc',
+              name: 'OvrC'
+            }
+          },
+          create: {
+            options: {
+              command: 'create',
+              id: 'com.ovrc.ovrc',
+              name: 'OvrC'
+            }
+          },
+          add_platforms: {
+            options: {
+              command: 'platform',
+              action: 'add',
+              platforms: ['ios', 'android']
+            }
+          },
+          add_plugins: {
+            options: {
+              command: ['plugin','prepare'],
+              action: 'add',
+              plugins: [
+                'device',
+                'network-information',
+                 'inappbrowser' 
+              ]
+            }
+          },
+          build_ios: {
+            options: {
+              command: 'build',
+              platforms: ['ios']
+            }
+          },
+          build_android: {
+            options: {
+              command: 'build',
+              platforms: ['android'],
+              args: ['--verbose']
+            }
+          },
+          run_ios: {
+            options: {
+              command: 'run',
+              platforms: ['ios']
+            }
+          },
+          run_android: {
+            options: {
+              command: 'run',
+              platforms: ['android'] ,
+              args: ['--device']
+            }
+          },
+          test_android: {
+            options: {
+              command: 'run',
+              platforms: ['android'] ,
+              args: ['--device']
+            }
+          },
+          emulate_android: {
+            options: {
+              command: 'emulate',
+              platforms: ['android']
+            }
+          },
+          emulate_ios: {
+            options: {
+              command: 'emulate',
+              platforms: ['ios']
+            }
+          },
+          release_ios: {
+              options: {
+                  command: 'build',
+                  platforms: ['ios'],
+                  args : ['--release']
+              }
+          },
+          build_android_and_sign : {
+            options: {
+              command: 'build',
+              platforms: ['android'],
+              args : ['--release']
+            }
+          }
+        },
+
+
     });
 
 
@@ -482,8 +588,28 @@ module.exports = function(grunt) {
         'test',
         'build'
     ]);
-
+ 
     grunt.registerTask('build:ios',['build','cordovacli:build_ios']);
 
-    grunt.registerTask('run:ios',['cordovacli:run_ios']);
+    grunt.registerTask('run:ios',['cordovacli:run_ios']); 
+    grunt.registerTask('run:android',     [ 'cordovacli:run_android' ]);
+    // grunt.registerTask('run:ios',         [ 'copy:native_ios', 'cordovacli:run_ios'     ]);
+
+    // TODO: research how to generate binaries in a specific location (staging/native etc.)
+    // only genrates the link - use XCode after this to generate ipa
+    grunt.registerTask('build:android',   [ 'clean', 'build:native', 'cordovacli:build_android' ]);
+    // grunt.registerTask('build:ios',       [ 'clean', 'build:native', 'copy:native_ios', 'cordovacli:build_ios'     ]);
+
+    // copy the staging files, bundle and deploy to an android/ios emulator
+    // grunt.registerTask('emulate:android', [ 'copy:native_android', 'cordovacli:emulate_android' ]);
+    // grunt.registerTask('emulate:ios',     [ 'copy:native_ios', 'cordovacli:emulate_ios'     ]);
+
+    // grunt.registerTask('release:android', [ 'clean', 'release:native', 'copy:native_android', 'cordovacli:build_android_and_sign'  ]);
+
+    // grunt.registerTask('test:android',    [ 'release', 'copy:native_android', 'cordovacli:test_android' ]);
+    // grunt.registerTask('test:ios',        [ 'release', 'copy:native_ios', 'cordovacli:run_ios' ]);
+
+    // grunt.registerTask('release:ios',     [  'clean', 'release:native','copy:native_ios', 'cordovacli:release_ios']);
+
+ 
 };
