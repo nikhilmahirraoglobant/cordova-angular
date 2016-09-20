@@ -175,7 +175,8 @@ module.exports.metadata =
     "cordova-plugin-flashlight": "3.1.0",
     "cordova-plugin-inappbrowser": "1.4.0",
     "cordova-plugin-vibration": "2.1.1",
-    "cordova-plugin-whitelist": "1.3.0"
+    "cordova-plugin-whitelist": "1.3.0",
+    "cordova-plugin-geolocation": "2.3.0"
 }
 // BOTTOM OF METADATA
 });

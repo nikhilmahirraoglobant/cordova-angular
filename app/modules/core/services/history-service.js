@@ -8,14 +8,14 @@
 angular
     .module('core')
     .service('historyService',function(cityWeather, localStorageService){
- 
+
     var that = this;
-    
+
     this.updateHistory = function(cityName)
     {
-    
+
         var cities = [];
-        
+
         if(localStorage["cities"] == undefined)
         {
             cities[0] = cityName;
@@ -24,26 +24,26 @@ angular
         else
         {
             cities = JSON.parse(localStorage["cities"]);
-            
+
             if(cities.indexOf(cityName) != -1)
             {
                 cities.splice(cities.indexOf(cityName), 1);
             }
-            
+
             cities.unshift(cityName);
-            
+
             if(cities.length > 5)
             {
-              // cities.pop(); 
+              // cities.pop();
             }
-            
-            
+
+
             localStorage["cities"] = JSON.stringify(cities);
         }
-        
+
         return cities;
     };
-    
+
     this.getCities = function()
     {
         if(localStorage["cities"] == undefined)
@@ -55,5 +55,5 @@ angular
             return JSON.parse(localStorage["cities"]);
         }
     };
-    
+
 });

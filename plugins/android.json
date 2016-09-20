@@ -27,6 +27,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "io.cordova.angularcordova"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "io.cordova.angularcordova"
         }
     },
     "dependent_plugins": {
