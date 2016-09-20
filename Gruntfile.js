@@ -6,33 +6,7 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
     require('time-grunt')(grunt);
 
-    grunt.initConfig({
-
-        cordovacli : {
-          options: {
-              path: 'www',
-              cli: 'cordova'
-          },
-          cordova: {
-              options: {
-                command: ['build'],
-                platforms: ['ios']
-              }
-            },
-            build_ios : {
-                options : {
-                    command : 'build',
-                    platforms : ['ios'],
-                    args : ['--debug']
-                }
-            },
-            run_ios: {
-              options: {
-                command: 'run',
-                platforms: ['ios']
-              }
-            }
-        },
+    grunt.initConfig({ 
         yeoman: {
             app: 'app',
             temp: 'temp',
