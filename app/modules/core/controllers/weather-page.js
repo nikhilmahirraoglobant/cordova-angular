@@ -48,15 +48,7 @@ angular
                 var cityInfo = {};
                 cityInfo.name = cityName;
 
-                cityWeather.getWeatherInfo(cityInfo.name)
-                    .then(function(data) {
-
-                            cityInfo.weatherResult = data;
-                        },
-                        function(error) {
-                            //console.log(JSON.stringify(error));
-                            //alert("Get weather info failed");
-                        });
+                $scope.getWeatherInfo(cityInfo);
 
                 return cityInfo;
             }
@@ -66,6 +58,42 @@ angular
             if ($scope.cityHistroy.length > 0) {
                 $scope.city = $scope.cityHistroy[0].name;
             }
+        };
+
+        $scope.getWeatherInfo = function (obj) {
+
+          var cityDetails;
+          if(obj.lat && obj.lon) {
+            cityDetails = obj;
+          } else if(obj.name) {
+            cityDetails = obj.name;
+          }
+          //alert(cityDetails.lat);
+          //alert(cityDetails.lon);
+          cityWeather.getWeatherInfo(cityDetails)
+              .then(function(data) {
+                      console.log(data);
+                      $scope.city = data.city.name + ', ' + data.city.country;
+                      //cityInfo.weatherResult = data;
+                  },
+                  function(error) {
+                      console.log('Error in getting weather information -- ', error);
+                      //console.log(JSON.stringify(error));
+                      //alert("Get weather info failed");
+                  });
+        };
+
+        $scope.getGeoLocationWeather = function(){
+            document.addEventListener('deviceready',function () {
+              navigator.geolocation.getCurrentPosition(function (position) {
+                var loc = {};
+                loc.lat = position.coords.latitude;
+                loc.lon = position.coords.longitude;
+
+                $scope.getWeatherInfo(loc);
+
+              });
+            });
         };
 
         $scope.map = {
